@@ -1,80 +1,8 @@
 <?php 
-class User {
-    private $sentences;
-    private $rid;
+require 'user/user.php';
+require 'opinion/opinion.php';
+require 'sentence/sentence.php';
 
-    public function __construct ($rid) {
-        $this->sentences = array();
-        $this->rid = $rid;
-    }
-    public function getRid() {
-        return $this->rid;
-    }
-    public function addSentence(Sentence $sentence) {
-        $this->sentences[] = $sentence;
-    }
-    public function getSentences() {
-        return $this->sentences;
-    }
-    public function getSentence($index) {
-        return $this->sentences[$index];
-    }
-}
-class Opinion {
-    private $s_id;
-    private $category;
-    private $polarity;
-
-    public function __construct ($category, $polarity, $s_id = '') {
-        $this->category = $category;
-        $this->polarity = $polarity;
-        $this->s_id = $s_id;
-    }
-    public function getSid() {
-        return $this->s_id;
-    }
-    public function getCategory() {
-        return $this->category;
-    }
-    public function getPolarity() {
-        return $this->polarity;
-    }
-}
-class Sentence {
-    private $s_id;
-    private $sentence_id;
-    private $rid;
-    private $product_id;
-    private $text;
-    private $opinions;
-
-    public function __construct ($sentence_id, $rid, $product_id, $text, $s_id = '') {
-        $this->sentence_id = $sentence_id;
-        $this->rid = $rid;
-        $this->product_id = $product_id;
-        $this->text = $text;
-        $this->opinions = array();
-        $this->s_id = $s_id;
-    }
-    public function addOpinion(Opinion $opinion) {
-        $this->opinions[] = $opinion;
-    }
-    public function getOpinions() {
-        return $this->opinions;
-    }
-    public function getOpinion($index) {
-        return $this->opinions[$index];
-    }
-    public function getSentenceParams() {
-        return array(
-            's_id' => $this->s_id,
-            'sentence_id' => $this->sentence_id,
-            'rid' => $this->rid,
-            'product_id' => $this->product_id,
-            'text' => $this->text
-        );
-    }
-}
 class ImporterV2 {
     private $xml;
     private $connection;

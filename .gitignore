@@ -1,0 +1,6 @@
+*.swp
+*.xml
+unirest/
+Makefile
+datamine.sql
+import.log
