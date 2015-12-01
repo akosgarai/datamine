@@ -61,6 +61,20 @@ angular.module('analizator', []).controller('analizatorController', ['$scope', '
                 console.log(response);
             });
         }
-        
     };
+    $scope.activateAnalizator = function (sentence, forceFlag) {
+        var sid = sentence.s_id;
+        var productId = sentence.product_id;
+        var text = sentence.text;
+        var data = {'requestType':'analyze_sid','s_id':sid,'productId':productId,'text':text,'forceSkyttle':forceFlag};
+        var request = $http.post('/szovegbanyaszat/site.php', data).then(
+                function (response) {
+                    console.log('analizator success callback');
+                    console.log(response);
+                }, function (response){
+                    console.log('analizator error callback');
+                    console.log(response);
+                }
+            );
+    }
 }]);
