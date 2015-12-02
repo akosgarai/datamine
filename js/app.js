@@ -1,5 +1,4 @@
 angular.module('analizator', []).controller('analizatorController', ['$scope', '$http', function($scope, $http) {
-    $scope.dummyText = 'dummy';
     $scope.products = [];
     $scope.users = [];
     $scope.sentences = [];
@@ -62,6 +61,8 @@ angular.module('analizator', []).controller('analizatorController', ['$scope', '
             });
         }
     };
+    $scope.displayAnalization = function () {
+    };
     $scope.activateAnalizator = function (sentence, forceFlag) {
         var sid = sentence.s_id;
         var productId = sentence.product_id;
@@ -70,7 +71,8 @@ angular.module('analizator', []).controller('analizatorController', ['$scope', '
         var request = $http.post('/szovegbanyaszat/site.php', data).then(
                 function (response) {
                     console.log('analizator success callback');
-                    console.log(response);
+                    sentence.skyttleData = response.data;
+                    console.log(sentence.skyttleData);
                 }, function (response){
                     console.log('analizator error callback');
                     console.log(response);

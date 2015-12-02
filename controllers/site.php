@@ -1,7 +1,7 @@
 <?php
-require 'user/user.php';
-require 'sentence/sentence.php';
-require 'opinion/opinion.php';
+//require 'user/user.php';
+//require 'sentence/sentence.php';
+//require 'opinion/opinion.php';
 require_once 'unirest-php/src/Unirest.php';
 
 class site {
@@ -125,7 +125,7 @@ class site {
         if (!$previousAnalization || $force) {
             $options = '';
             if ($productId == 1) {
-                $options = 'electronic';
+                $options = 'electronics';
             }
             $response = $this->doSkyttleAnalyzation($text, $options);
             if (!$response->responseCode) {
@@ -133,13 +133,20 @@ class site {
                 return $response;
             }
         } else {
-            $request_id = $previousAnalization[0]->request_id;
+            $request_id = $previousAnalization[0]['request_id'];
             $sentiments = $this->getSentimentsForAnalization($request_id);
             $terms = $this->getTermsForAnalization($request_id);
             $sentimentScores = $this->getSentimentScoresForAnalize($request_id);
             $finalResponse = $this->constructSkyttleLikeResponse($sentiments, $terms, $sentimentScores);
             return $finalResponse;
         }
+    }
+    public function dbtestMockForCreatingSkyttleLikeObject($request_id) {
+        $sentiments = $this->getSentimentsForAnalization($request_id);
+        $terms = $this->getTermsForAnalization($request_id);
+        $sentimentScores = $this->getSentimentScoresForAnalize($request_id);
+        $finalResponse = $this->constructSkyttleLikeResponse($sentiments, $terms, $sentimentScores);
+        return $finalResponse;
     }
 
     private function saveAnalization($response, $request_type, $request_type_id) {
@@ -163,17 +170,17 @@ class site {
         $response = array('docs'=>array());
         $element = array(
             'sentiment'=>array(),
-            'sentiment_scores'=>array('pos'=>$sentimentScores->pos, 'neu'=>$sentimentScores->neutral, 'neg'=>$sentimentScores->neg),
+            'sentiment_scores'=>array('pos'=>$sentimentScores[0]['pos'], 'neu'=>$sentimentScores[0]['neutral'], 'neg'=>$sentimentScores[0]['neg']),
             'terms'=>array()
         );
         for ($i = 0; $i < count($sentiments); $i++) {
-            $element->sentiment[] = array('polarity'=>$sentiment[$i]->polarity, 'text'=>$sentiment[$i]->text);
+            $element['sentiment'][] = array('polarity'=>$sentiments[$i]['polarity'], 'text'=>$sentiments[$i]['text']);
         }
         for ($i = 0; $i < count($terms); $i++) {
-            $element->terms[] = array('count'=>$terms[$i]->count, 'id'=>$terms[$i]->skyttle_id, 'term'=>$terms[$i]->term_text);
+            $element['terms'][] = array('count'=>$terms[$i]['count'], 'id'=>$terms[$i]['skyttle_id'], 'term'=>$terms[$i]['term_text']);
         }
-        $response->docs[] = $element;
-        return $element;
+        $response['docs'][] = $element;
+        return $response;
     }
 
     private function getRequestLogId($request_type, $request_type_id) {
@@ -267,7 +274,7 @@ class site {
             "text" => $text
         );
         if ($options != '') {
-            $body->domain = $options;
+            $body['domain'] = $options;
         }
         // Mashape auth
         Unirest\Request::setMashapeKey($mashape_key);
@@ -280,6 +287,9 @@ class site {
         }
     }
 }
+
+
+
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 if ($request->requestType == 'opinion') {

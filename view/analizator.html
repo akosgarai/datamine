@@ -33,6 +33,23 @@
                         <div data-ng-if="s.opinions && s.opinions.length != 0" data-ng-show="s.showLabels">
                             <span class="label" data-ng-repeat="o in s.opinions" data-ng-init="pol = o.polarity" data-ng-class="{'label-success' : pol == 'positive', 'label-warning' : pol == 'negative'}" data-ng-bind="o.category" style="margin-right: 5px;"></span>
                         </div>
+                        <div data-ng-if="s.skyttleData">
+                            <div class="col-md-3"><h5>Sentiment scores</h5>
+                                <label for="pos">Positive: <span id="pos" data-ng-bind="s.skyttleData['docs'][0]['sentiment_scores']['pos']"></span></label><br />
+                                <label for="neu">Neutral: <span id="neu" data-ng-bind="s.skyttleData['docs'][0]['sentiment_scores']['neu']"></span></label><br />
+                                <label for="neg">Negative: <span id="neg" data-ng-bind="s.skyttleData['docs'][0]['sentiment_scores']['neg']"></span></label>
+                            </div>
+                            <div class="col-md-3"><h5>Terms, keywords</h5>
+                                <div data-ng-repeat="keyWords in s.skyttleData['docs'][0]['terms']">
+                                    <label>Keyword: <span data-ng-bind="keyWords.term"></span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6"><h5>Sentiments</h5>
+                                <div data-ng-repeat="skyttleSentiments in s.skyttleData['docs'][0]['sentiment']">
+                                    <span data-ng-bind="skyttleSentiments.text" data-ng-class="{'label-success' : skyttleSentiments.polarity == 'pos', 'label-warning' : skyttleSentiments.polarity == 'neg'}"></span><br />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-footer" data-ng-if="!s.showLabels" data-ng-click="getOpinionForSentence(s); s.showLabels = !s.showLabels">Show</div>
                     <div class="panel-footer" data-ng-if="s.showLabels" data-ng-click="activateAnalizator(s, false)">Analyze with Skyttle.com</div>
