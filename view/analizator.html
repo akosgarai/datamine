@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-md-3"><h5>Terms, keywords</h5>
                                 <div data-ng-repeat="keyWords in s.skyttleData['docs'][0]['terms']">
-                                    <label>Keyword: <span data-ng-bind="keyWords.term" data-ng-init="keyWords.myLabel = labelMap($index)" data-ng-clsaa="keyWords.myLabel" class="label"></span></label>
+                                    <label>Keyword: <span data-ng-bind="keyWords.term" data-ng-init="keyWords.myLabel = labelMap($index)" data-ng-class="keyWords.myLabel" class="label"></span></label>
                                 </div>
                             </div>
                             <div class="col-md-6"><h5>Sentiments</h5>
@@ -56,7 +56,8 @@
                         </div>
                     </div>
                     <div class="panel-footer" data-ng-if="!s.showLabels" data-ng-click="getOpinionForSentence(s); s.showLabels = !s.showLabels">Show existing opinions</div>
-                    <div class="panel-footer" data-ng-if="s.showLabels" data-ng-click="activateAnalizator(s, false)">Analyze
+                    <div class="panel-footer" data-ng-if="s.showLabels">
+                        <span class="label label-default" data-ng-click="activateAnalizator(s, false)">Analyze</span>
                         <span class="label label-primary" data-ng-click="activateAnalizator(s, true)">Force Skyttle</span>
                     </div>
                 </div>

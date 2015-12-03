@@ -131,6 +131,8 @@ class site {
             if (!$response->responseCode) {
                 $this->saveAnalization($response, 's', $sid);
                 return $response;
+            } else {
+                return "WRONG THINGS HAPPENED";
             }
         } else {
             $request_id = $previousAnalization[0]['request_id'];
@@ -198,7 +200,7 @@ class site {
         }
     }
     private function getSentimentsForAnalization($request_id) {
-        $query = "SELECT * FROM sentiment_log WHERE request_id = '".$request_id."'";
+        $query = "SELECT * FROM sentiment_log WHERE request_id = '".$request_id."' GROUP BY text";
         $result = mysql_query($query);
         return $this->fetch($result);
     }
