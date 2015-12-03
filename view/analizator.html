@@ -8,25 +8,29 @@
     <div class="container">
         <div data-ng-app="analizator" data-ng-controller="analizatorController">
             <div data-ng-init="init()">
-                <div  class="form-inline">
-                    <div class="form-group">
-                        <label for="products">Product:</label>
-                        <select name="products" id="products" data-ng-model="selectedProduct" class="form-control">
-                            <option value="">Select one</option>
-                            <option data-ng-repeat="p in products" value="{{p.product_id}}">{{p.product_name}}</option>
-                        </select>
+                <div class="panel">
+                    <div class="panel-body">
+                        <div  class="form-inline">
+                            <div class="form-group">
+                                <label for="products">Product:</label>
+                                <select name="products" id="products" data-ng-model="selectedProduct" class="form-control">
+                                    <option value="">Select one</option>
+                                    <option data-ng-repeat="p in products" value="{{p.product_id}}">{{p.product_name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="users">User:</label>
+                                <select name="users" id="users" data-ng-model="selectedUser" class="form-control">
+                                    <option value="">Select one</option>
+                                    <option data-ng-repeat="u in users" value="{{u.rid}}">{{u.rid}}</option>
+                                </select>
+                            </div>
+                            <div class="checkbox-inline">
+                                <label for="opinion"><input type="checkbox" name="opinion" id="opinion" data-ng-model="opinionFlag"/>With opinions</label>
+                            </div>
+                            <input type="button" name="submit" class="btn btn-default" data-ng-click="confirmGetSentencesForProduct(selectedProduct, selectedUser)" value="GET SENTENCES"/>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="users">User:</label>
-                        <select name="users" id="users" data-ng-model="selectedUser" class="form-control">
-                            <option value="">Select one</option>
-                            <option data-ng-repeat="u in users" value="{{u.rid}}">{{u.rid}}</option>
-                        </select>
-                    </div>
-                    <div class="checkbox-inline">
-                        <label for="opinion"><input type="checkbox" name="opinion" id="opinion" data-ng-model="opinionFlag"/>With opinions</label>
-                    </div>
-                    <input type="button" name="submit" class="btn btn-default" data-ng-click="confirmGetSentencesForProduct(selectedProduct, selectedUser)" value="GET SENTENCES"/>
                 </div>
                 <div class="panel panel-default" data-ng-repeat="s in sentences" data-ng-init="s.showLabels = false">
                     <div class="panel-body">{{s.text}}
