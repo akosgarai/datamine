@@ -138,6 +138,7 @@ class site {
             $terms = $this->getTermsForAnalization($request_id);
             $sentimentScores = $this->getSentimentScoresForAnalize($request_id);
             $finalResponse = $this->constructSkyttleLikeResponse($sentiments, $terms, $sentimentScores);
+            $finalResponse['dbFlag'] = true;
             return $finalResponse;
         }
     }

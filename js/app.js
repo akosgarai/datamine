@@ -61,7 +61,30 @@ angular.module('analizator', []).controller('analizatorController', ['$scope', '
             });
         }
     };
-    $scope.displayAnalization = function () {
+    $scope.labelMap = function (index) {
+        var mod = index % 6;
+        var label = '';
+        switch (mod) {
+            case 0:
+                label = 'label-default';
+                break;
+            case 1:
+                label = 'label-primary';
+                break;
+            case 2:
+                label = 'label-success';
+                break;
+            case 3:
+                label = 'label-info';
+                break;
+            case 4:
+                label = 'label-warning';
+                break;
+            case 5:
+                label = 'label-danger';
+                break;
+        }
+        return label;
     };
     $scope.activateAnalizator = function (sentence, forceFlag) {
         var sid = sentence.s_id;
