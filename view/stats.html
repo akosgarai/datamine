@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Sentiment Statistics</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div data-ng-app="stat" data-ng-controller="statController">
+            <div data-ng-init="init()">
+                {{analizedSentenceCount}} sentences analized from {{allSentenceCount}} (ratio: {{analizedSentenceCount/allSentenceCount*100}} %)<br />
+                <input type="button" class="btn btn-default" value="Details" data-ng-click="getSentimentScores()" />
+            </div>
+            <div data-ng-if="scores.pos > 0 || scores.neutral > 0 || scores.neg > 0">
+                positive: {{scores.pos}}, neutral: {{scores.neutral}}, negative: {{scores.neg}}
+            </div>
+        </div>
+    </div>
+    <script src="js/statsApp.js"></script>
+</body>
+</html>
